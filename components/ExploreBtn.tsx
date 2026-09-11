@@ -1,12 +1,18 @@
 'use client';
 import Image from "next/image";
+import posthog from "posthog-js";
+
 const ExploreBtn = () => {
     return (
         <button
             type="button"
             id="explore-btn"
             className="mx-auto mt-7 flex w-full max-w-md items-center justify-center gap-3 rounded-full border border-gray-800 bg-[#0d141c] px-6 py-4 text-white"
-            onClick={() => console.log("Click")}
+            onClick={() => {
+                if (process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN && process.env.NEXT_PUBLIC_POSTHOG_HOST) {
+                    posthog.capture("events_explored");
+                }
+            }}
         >
             <a href="#event" className="flex items-center gap-3">
                 <span>Explore Events</span>
